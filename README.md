@@ -91,6 +91,43 @@ Supports both **English** and **Japanese**, with full end-to-end language consis
 
 ![Architecture Diagram](/assets/architecture.png)  
 *Visual representation of the data flow: User → Next.js UI → OpenWeatherMap → Gemini AI.*
+graph TD
+    User([👤 User])
+    
+    subgraph Client ["🖥️ Next.js Client (Browser)"]
+        UI[page.tsx UI]
+        Voice[Voice Input]
+    end
+
+    subgraph Server ["⚙️ Next.js Server"]
+        Proxy[("/api/gemini/route.ts")]
+    end
+
+    subgraph External ["☁️ External Services"]
+        OWM[OpenWeatherMap API]
+        Gemini[Google Gemini AI]
+    end
+
+    %% Interactions
+    User -->|Types or Speaks| UI
+    User -->|Voice| Voice
+    Voice -->|Text| UI
+    
+    UI -->|1. Fetch Weather| OWM
+    OWM -- Weather Data --> UI
+    
+    UI -->|2. Send Weather + Query| Proxy
+    Proxy -->|3. Construct Prompt| Gemini
+    Gemini -- AI Suggestion --> Proxy
+    Proxy -- Response --> UI
+    
+    UI -->|4. Render Chat| User
+
+    %% Styling
+    style User fill:#f9f,stroke:#333,stroke-width:2px
+    style Client fill:#e1f5fe,stroke:#01579b
+    style Server fill:#fff3e0,stroke:#ff6f00
+    style External fill:#f3e5f5,stroke:#7b1fa2
 
 > **Tip:** If you used the generator image provided earlier, place it at `public/assets/architecture.png` so the path above works on GitHub and Vercel.
 
@@ -100,6 +137,42 @@ Supports both **English** and **Japanese**, with full end-to-end language consis
 
 ![Project Structure](/assets/structure.png)  
 *Overview of the Next.js App Router file organization.*
+graph TD
+    Root[📁 src/]
+    
+    %% App Directory
+    Root --> App[📂 app/]
+    App --> Page["📄 page.tsx <br/>(Main UI & Logic)"]
+    App --> Globals["🎨 globals.css <br/>(Tailwind & Themes)"]
+    App --> API[📂 api/]
+    API --> GemRoute[📂 gemini/]
+    GemRoute --> Route["⚡ route.ts <br/>(Gemini Proxy)"]
+
+    %% Components
+    Root --> Comps[📂 components/]
+    Comps --> MsgTime["🧩 MessageTime.tsx"]
+
+    %% Hooks
+    Root --> Hooks[📂 hooks/]
+    Hooks --> VoiceHook["🪝 useVoiceInput.ts"]
+
+    %% Lib
+    Root --> Lib[📂 lib/]
+    Lib --> APIFuncs["🛠️ api.ts <br/>(Fetch Functions)"]
+    Lib --> Consts["📝 constants.ts <br/>(Prompts & Types)"]
+    Lib --> Helpers["🔧 helpers.ts"]
+
+    %% Public
+    Root --> Public[📂 public/]
+    Public --> Assets["🖼️ images/icons"]
+
+    %% Styling
+    style Root fill:#fafafa,stroke:#333,stroke-width:2px
+    style App fill:#e3f2fd,stroke:#2196f3
+    style API fill:#e3f2fd,stroke:#2196f3
+    style Comps fill:#fff9c4,stroke:#fbc02d
+    style Hooks fill:#e8f5e9,stroke:#4caf50
+    style Lib fill:#fce4ec,stroke:#e91e63
 
 src/
 app/
