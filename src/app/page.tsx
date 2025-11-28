@@ -743,7 +743,7 @@ const App: React.FC = () => {
 
         {/* --- Input Area --- */}
         <div className="fixed bottom-0 left-0 right-0 z-40">
-          <div className="max-w-5xl mx-auto w-full px-4 pt-4 pb-0">
+          <div className="max-w-4xl mx-auto w-full px-2 pt-4 pb-0">
             <form onSubmit={handleSendMessage} className="bg-white/90 dark:bg-blue-900/90 backdrop-blur-md border-t border-orange-200 dark:border-blue-700 rounded-t-xl shadow-lg p-4">
               <div className="flex gap-3">
                 <input
@@ -777,7 +777,7 @@ const App: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading || !userInput.trim()}
-                  className={`px-6 rounded-lg text-white font-bold shadow-md transition-colors disabled:opacity-50 ${
+                  className={`px-4 rounded-lg text-white font-bold shadow-md transition-colors disabled:opacity-50 ${
                      darkMode ? 'bg-blue-700 hover:bg-blue-600' : 'bg-orange-600 hover:bg-orange-500'
                   }`}
                 >
