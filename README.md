@@ -4,94 +4,104 @@ A modern bilingual weather chatbot powered by AI — works best on Google Chrome
 
 🎥 Demo Video
 
-Replace the link with your hosted demo:
-
-👉 Demo: https://your-demo-video-link-here.com
+👉 Live Demo: https://weather-chat-assistance.vercel.app/
 
 🎞️ Theme Previews
 ☀️ Light Mode (Sakura Animation)
 
 🌙 Dark Mode (Snow Animation)
 
+💡 You can replace these GIFs with your own recordings anytime.
+
 📌 Overview
 
-Weather Chat Assistant is a compact, intelligent weather chatbot built with Next.js (App Router).
-It retrieves live weather data from OpenWeatherMap and asks Google Gemini to generate short, helpful suggestions — about clothing, activities, safety, and food — in English or Japanese depending on the selected UI language.
+Weather Chat Assistant is a compact, intelligent chatbot built using Next.js (App Router).
+It fetches real-time weather from OpenWeatherMap and uses Google Gemini to generate short, helpful suggestions about:
 
-Runs best on Chrome due to Web Speech API performance.
+Clothing
+
+Activities
+
+Safety
+
+Food & comfort
+
+Supports both English and Japanese, with full end-to-end language consistency.
+
+Chrome recommended due to best Web Speech API performance.
 
 ✨ Key Features
 🌐 Bilingual (EN ↔ JA)
 
-Full end-to-end language control (UI → query → Gemini → response)
+Full language pipeline: UI → Query → Gemini → Response
 
-Replies always match selected interface language
+Replies always match selected language
 
 🏙️ Smart City Detection
 
-Detects English & Japanese place names
+Detects Japanese & English city names
 
-Handles mixed inputs and Japanese suffixes (市, 県, 区)
+Handles Japanese suffixes: 市, 県, 区
 
-Includes Indian city variants and common global cities
+Includes Indian city variants & global cities
 
-Graceful fallback to previous valid city on 404
+Graceful fallback on 404 (previous valid city + notice)
 
 🌦️ Rich Weather Cards
 
-Displays the exact city requested
+Shows the exact city asked by the user
 
-Auto-updates unless the user asks about a different place
+Auto-updates based on text/voice input
 
-Shows temp, humidity, wind, condition, etc.
+Displays: temperature, humidity, wind, condition, description
 
 🎙️ Voice Input
 
-JA/EN speech recognition via Web Speech API
+JA/EN speech recognition
 
-Same pipeline as typed messages (city detection → weather → reply)
+Flows into same city-detection & weather pipeline
 
-🎨 Clean UI/UX
+🎨 Advanced UI/UX
 
 Persistent dark mode
 
-Sticky, compact-on-scroll header with hysteresis
+Smart sticky header (compact on scroll)
 
-Floating “↓ Latest” button
+“↓ Latest” floating scroll button
 
-Fixed chat input bar
+Fixed mobile-friendly chat bar
 
-Smooth auto-scroll to latest messages
+Smooth auto-scroll behavior
 
-💬 Improved AI Replies
+💬 Polished Gemini Responses
 
-Bolded weather values
+Bold important values
 
-Highlight gear/safety terms
+Highlights items like coats, umbrellas, warnings
 
 Auto-link URLs
 
 Safe HTML formatting
 
-🔄 How the App Works — Flow Overview
+🔄 How the App Works
 
-User types or speaks a message (EN/JA).
+User types or speaks (English / Japanese)
 
-City detection runs (handles JP suffixes + EN/JP dictionaries).
+City detection analyzes the input
 
-Weather is fetched from OpenWeatherMap:
+Weather is fetched from OpenWeatherMap
 
-If new city fails (404) → fallback to previous valid city with notice.
+If invalid city → fallback to last valid city
 
-Weather context + user question → sent to /api/gemini.
+Context is sent to /api/gemini
 
-Gemini generates a concise reply in the selected language.
+Gemini produces short useful suggestions
 
-UI renders weather card + assistant message.
+UI displays a weather card + assistant message
 
-Auto-scroll keeps the latest reply visible.
+Scroll automatically updates to latest message
 
-🏗️ Architecture Diagram (Text Based)
+🏗️ Architecture Diagram (Text-Based)
 User
   ↓
 Next.js UI (page.tsx)
@@ -100,46 +110,47 @@ OpenWeatherMap API → Current Weather
   ↓
 /api/gemini → Server-side proxy
   ↓
-Google Gemini → Advice / Suggestions
+Google Gemini → Suggestions
   ↓
-UI renders:
-   - Weather Card
-   - Assistant Message
+UI Renders:
+  → Weather Card
+  → Assistant Message
 
 📁 Project Structure
 src/
   app/
     page.tsx                # Main chat UI & controller
     api/
-      gemini/route.ts       # Server route – Gemini proxy w/ language enforcement
+      gemini/route.ts       # Server route – Gemini proxy with enforced language
     globals.css             # Global styles, resets, animations
 
   components/
-    MessageTime.tsx         # Client-only timestamp renderer (fixes hydration mismatch)
+    MessageTime.tsx         # Client-only timestamp rendering (fixes hydration mismatch)
 
   hooks/
-    useVoiceInput.ts        # Web Speech API hook (EN/JA voice → text → detection)
+    useVoiceInput.ts        # JA/EN Voice → Text → City detection
 
   lib/
     api.ts                  # fetchWeather + fetchGeminiResponse
     constants.ts            # System prompt + model config
-    helpers.ts              # Utility methods (optional)
+    helpers.ts              # Optional utilities
 
-  public/                   # Static assets, icons
+  public/
+    # Icons, images, logos
 
-🧩 Why this structure works well
+🧩 Why This Structure Works
 
-Clear separation of UI, API logic, hooks, and components
+Clear separation of UI, logic, and API
 
-MessageTime.tsx isolates hydration-sensitive code (timestamps)
+MessageTime.tsx prevents hydration errors from timestamps
 
-Server route keeps API keys safe
+/api/gemini keeps your Gemini API key secure
 
-Easy to scale and maintain
+Modular and easy to expand
 
 ⚙️ Setup
 
-Create a .env.local file in the root:
+Create .env.local in the project root:
 
 NEXT_PUBLIC_OPENWEATHER_API_KEY=your_openweather_key
 GEMINI_API_KEY=your_gemini_key
@@ -150,46 +161,48 @@ Install dependencies:
 npm install
 
 
-Run locally:
+Start development server:
 
 npm run dev
 
 
-Open:
+Open app in browser:
 👉 http://localhost:3000
 
 🧪 Quick Functional Test
+✔ Language Switching
 
-Try the following to confirm all core features:
+Set JA → Ask → Reply in Japanese
 
-✔ Language
-
-Switch to JA → Ask a question → Reply appears in Japanese
-Switch to EN → Same question → Reply appears in English
+Set EN → Ask → Reply in English
 
 ✔ City Detection
+
+Try:
 
 “Weather in Delhi”
 
 “東京の天気教えて”
 
 “Is it cold in Osaka today?”
-→ Weather card updates automatically
+
+→ Weather card updates correctly
 
 ✔ Error Handling
 
-Try an unknown city:
+Try invalid:
 
-“Weather in GokulCityXYZ”
-→ App falls back to previous city + shows a friendly notice
+“Weather in RandomCityXYZ”
+→ App uses previous city + shows notice
 
 ✔ Voice
 
-Click mic → say “Nagoya no tenki” → works
+Tap mic → say “Nagoya no tenki”
+→ Works seamlessly
 
 🌐 Deployment
 
-Fully compatible with:
+Supported on:
 
 Vercel (recommended)
 
@@ -197,32 +210,32 @@ Netlify
 
 Cloudflare Pages
 
-Docker / Custom Node server
+Docker / custom Node server
 
-Add your environment keys in the hosting dashboard.
+Add environment keys in dashboard settings.
 
 🔒 Security Notes
 
 Never commit .env.local
 
-Use separate keys for dev & production
+Use separate dev & prod API keys
 
-Rotate leaked keys immediately
+Rotate keys immediately if exposed
 
-Gemini key stays server-side via /api/gemini
+Gemini key stays server-side (never exposed to browser)
 
 📜 License
 
-This project is licensed under the MIT License.
+MIT License — open for personal & commercial use.
 
 ❤️ Credits
 
 OpenWeatherMap — Real-time weather API
 
-Google Gemini — AI-powered suggestions
+Google Gemini — AI suggestions
 
 Next.js — App framework
 
 TailwindCSS — Styling
 
-Emojis & icons — Twemoji / Unicode
+Twemoji / Unicode — Icons & emoji
