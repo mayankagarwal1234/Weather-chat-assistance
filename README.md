@@ -109,30 +109,27 @@ Copy code
 # 📁 Project Structure
 
 src/
-app/
-page.tsx # Main chat UI & controller
-api/
-gemini/route.ts # Server route – Gemini proxy with enforced language
-globals.css # Global styles, resets, animations
+  app/
+    page.tsx              # Main chat UI & controller
+    api/
+      gemini/
+        route.ts          # Server route – Gemini proxy with enforced language
+    globals.css           # Global styles, resets, animations
 
-components/
-MessageTime.tsx # Client-only timestamp rendering (fixes hydration mismatch)
+  components/
+    MessageTime.tsx       # Client-only timestamp rendering (fixes hydration mismatch)
 
-hooks/
-useVoiceInput.ts # JA/EN Voice → Text → City detection
+  hooks/
+    useVoiceInput.ts      # JA/EN Voice → Text → City detection
 
-lib/
-api.ts # fetchWeather + fetchGeminiResponse
-constants.ts # System prompt + model config
-helpers.ts # Optional utilities
+  lib/
+    api.ts                # fetchWeather + fetchGeminiResponse
+    constants.ts          # System prompt + model config
+    helpers.ts            # Optional utilities
 
-public/
-# Static assets, icons
+  public/
+    # Static assets, icons
 
-yaml
-Copy code
-
----
 
 ## 🧩 Why This Structure Works
 
