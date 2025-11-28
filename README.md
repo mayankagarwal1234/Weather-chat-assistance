@@ -13,10 +13,10 @@
 ## 🎞️ Theme Previews
 
 ### ☀️ Light Mode (Sakura Animation)  
-![Light Mode Preview](https://i.imgur.com/qp0QYlC.gif)
+![Light Mode Preview](/public/Screenshot 2025-11-28 181647.png)
 
 ### 🌙 Dark Mode (Snow Animation)  
-![Dark Mode Preview](https://i.imgur.com/m0bL9Rd.gif)
+![Dark Mode Preview](/public/Screenshot 2025-11-28 181653.png)
 
 > 💡 *Replace these GIFs with your own previews anytime.*
 
