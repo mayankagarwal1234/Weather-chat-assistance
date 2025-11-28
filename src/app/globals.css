@@ -1,0 +1,306 @@
+@import "tailwindcss";
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /* --- SUN THEME (Light Mode) --- */
+  --bg-gradient: linear-gradient(135deg, #fffbeb 0%, #fed7aa 50%, #fdba74 100%);
+  --foreground: #000000;
+  --heading-color: #dc2626;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(220, 38, 38, 0.2);
+  --header-bg: rgba(255, 251, 235, 0.95);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* --- MOON THEME (Dark Mode) --- */
+    --bg-gradient: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e1b4b 100%);
+    --foreground: #ffffff;
+    --heading-color: #fbbf24;
+    --card-bg: rgba(30, 41, 59, 0.9);
+    --card-border: rgba(251, 191, 36, 0.3);
+    --header-bg: rgba(30, 58, 138, 0.95);
+  }
+}
+
+body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  position: relative;
+  transition: all 0.5s ease;
+}
+
+/* Japanese pattern overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23dc2626' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  z-index: -1;
+  transition: all 0.5s ease;
+}
+
+.dark body::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23fbbf24' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* Headings */
+h1, h2, h3, strong {
+  color: var(--heading-color);
+}
+
+/* --- MOON THEME OVERRIDES (Dark Mode) --- */
+.dark body {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e1b4b 100%);
+  color: #ffffff;
+}
+
+/* Headings in Dark Mode -> Golden Yellow */
+.dark h1, .dark h2, .dark h3, .dark strong {
+  color: #fbbf24 !important;
+}
+
+/* --- HEADER STYLES --- */
+.app-header {
+  background-color: var(--header-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--card-border);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 20px rgba(220, 38, 38, 0.1);
+}
+
+.dark .app-header {
+  background-color: rgba(30, 58, 138, 0.95);
+  border-color: rgba(251, 191, 36, 0.3);
+  box-shadow: 0 2px 20px rgba(251, 191, 36, 0.1);
+}
+
+/* --- INPUTS & SELECTS --- */
+.app-input,
+.app-select {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #000000;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.app-input:focus,
+.app-select:focus {
+  background-color: #ffffff;
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+  outline: none;
+}
+
+/* Dark Mode Inputs */
+.dark .app-input,
+.dark .app-select {
+  background-color: rgba(30, 41, 59, 0.8);
+  color: #ffffff;
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+.dark .app-input:focus,
+.dark .app-select:focus {
+  background-color: rgba(30, 41, 59, 0.95);
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
+}
+
+.dark .app-input::placeholder {
+  color: #cbd5e1;
+}
+
+/* --- CARD STYLES --- */
+.bg-white {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(220, 38, 38, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.1);
+  transition: all 0.5s ease;
+}
+
+.dark .bg-white {
+  background-color: rgba(30, 41, 59, 0.9) !important;
+  border: 1px solid rgba(251, 191, 36, 0.1);
+  box-shadow: 0 4px 20px rgba(251, 191, 36, 0.1);
+}
+
+/* Text Color Overrides */
+.text-gray-800, .text-gray-700, .text-gray-600, .text-gray-500 {
+  color: #000000 !important;
+}
+
+.dark .text-gray-800, .dark .text-gray-700, .dark .text-gray-600, .dark .text-gray-500 {
+  color: #ffffff !important;
+}
+
+/* --- ASSISTANT CARD SPECIFICS --- */
+.assistant-card {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 32px 0 rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.assistant-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #dc2626, #f97316, #dc2626);
+  transition: all 0.5s ease;
+}
+
+.dark .assistant-card {
+  background: linear-gradient(180deg, rgba(30, 58, 138, 0.7), rgba(30, 27, 75, 0.9));
+  box-shadow: 0 8px 32px 0 rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.dark .assistant-card::before {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24);
+}
+
+.assistant-stat {
+  border-radius: 10px;
+  background-color: rgba(255,255,255,0.9) !important;
+  border: 1px solid rgba(220, 38, 38, 0.1);
+  transition: all 0.5s ease;
+}
+
+.dark .assistant-stat {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  border: 1px solid rgba(251, 191, 36, 0.1);
+}
+
+/* Highlights */
+.assistant-content .hl {
+  background: rgba(220, 38, 38, 0.2);
+  color: #dc2626;
+  padding: 0 0.25rem;
+  border-radius: 0.35rem;
+  font-weight: 600;
+  transition: all 0.5s ease;
+}
+
+.dark .assistant-content .hl {
+  background: rgba(251, 191, 36, 0.3);
+  color: #fbbf24;
+}
+
+/* Link Colors */
+a { color: #dc2626; text-decoration: underline; }
+.dark a { color: #fbbf24; text-decoration: underline; }
+
+/* Cherry blossom animation for light mode */
+@keyframes cherry-blossom-fall {
+  0% { 
+    transform: translateY(-10px) translateX(0) rotate(0deg); 
+    opacity: 0; 
+  }
+  10% { 
+    opacity: 0.8; 
+  }
+  90% { 
+    opacity: 0.8; 
+  }
+  100% { 
+    transform: translateY(100vh) translateX(20px) rotate(360deg); 
+    opacity: 0; 
+  }
+}
+
+.cherry-blossom {
+  position: fixed;
+  top: -10px;
+  font-size: 20px;
+  animation: cherry-blossom-fall 15s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Snowfall animation for dark mode */
+@keyframes snow-fall {
+  0% { 
+    transform: translateY(-10px) translateX(0) rotate(0deg); 
+    opacity: 0; 
+  }
+  10% { 
+    opacity: 0.9; 
+  }
+  90% { 
+    opacity: 0.9; 
+  }
+  100% { 
+    transform: translateY(100vh) translateX(30px) rotate(720deg); 
+    opacity: 0; 
+  }
+}
+
+.snowflake {
+  position: fixed;
+  top: -10px;
+  font-size: 18px;
+  animation: snow-fall 12s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cherry-blossom,
+.snowflake {
+  position: fixed;
+  overflow: hidden;
+}
+
+.japanese-sun {
+  background: radial-gradient(circle, #fef3c7 0%, #f59e0b 100%);
+  box-shadow: 0 0 50px #f59e0b;
+}
+
+.japanese-moon {
+  background: radial-gradient(circle, #fef3c7 0%, #d97706 100%);
+  box-shadow: 0 0 40px #fbbf24;
+}
+
+.welcome-message {
+  /* Yellowish Orange Gradient */
+  background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 50%, #f97316 100%);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  /* Force dark text for contrast */
+  color: #000000 !important;
+}
+
+.dark .welcome-message {
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #000000 !important;
+}
