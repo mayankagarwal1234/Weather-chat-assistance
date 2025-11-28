@@ -90,7 +90,10 @@ Supports both **English** and **Japanese**, with full end-to-end language consis
 # 🏗️ Architecture
 
 ![Architecture Diagram](/assets/architecture.png)  
-*Visual representation of the data flow: User → Next.js UI → OpenWeatherMap → Gemini AI.*
+*Visual representation of the data flow:
+User → Next.js UI → OpenWeatherMap → Gemini AI.*
+
+```mermaid
 graph TD
     %% Nodes
     User([👤 User])
@@ -120,38 +123,35 @@ graph TD
     style UI fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
     style Gemini fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
 
-> **Tip:** If you used the generator image provided earlier, place it at `public/assets/architecture.png` so the path above works on GitHub and Vercel.
-
----
-
 # 📁 Project Structure
 
-![Project Structure](/assets/structure.png)  
+![Project Structure]  
 *Overview of the Next.js App Router file organization.*
-graph TD
-  src/
+
+```bash
+src/
 ├── app/
 │   ├── api/
 │   │   └── gemini/
-│   │       └── route.ts       # Server-side API Proxy
-│   ├── layout.tsx             # Root layout & Metadata
-│   ├── page.tsx               # Main UI Controller
-│   └── globals.css            # Tailwind & Animations
+│   │       └── route.ts        # Server-side Gemini Proxy
+│   ├── layout.tsx              # Root layout & Metadata
+│   ├── page.tsx                # Main Chat UI Controller
+│   └── globals.css             # TailwindCSS + Animations
 │
 ├── components/
-│   └── MessageTime.tsx        # Client-side timestamp
+│   └── MessageTime.tsx         # Client-only timestamp to fix hydration issues
 │
 ├── hooks/
-│   └── useVoiceInput.ts       # Web Speech API Logic
+│   └── useVoiceInput.ts        # Web Speech API (EN/JA)
 │
 ├── lib/
-│   ├── api.ts                 # Fetchers (Weather + Gemini)
-│   ├── constants.ts           # Prompts & Config
-│   └── helpers.ts             # Formatters
+│   ├── api.ts                  # fetchWeather + fetchGeminiResponse
+│   ├── constants.ts            # System prompt + model config
+│   └── helpers.ts              # Formatters & utilities
 │
 └── public/
-    └── assets/                # Static images
-# Other static assets & icons
+    └── assets/                 # Architecture & Preview images
+# Other static files, icons, and animations
 ---
 
 ## 🧩 Why This Structure Works
