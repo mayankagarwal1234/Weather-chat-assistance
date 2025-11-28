@@ -734,10 +734,10 @@ const App: React.FC = () => {
         </div>
 
         {/* Error Message */}
-        {voiceError && (
+        {(voiceError || error) && (
           <div className="bg-red-100 border-l-4 border-red-500 text-red-800 p-3 rounded mb-4 max-w-5xl mx-auto w-full">
             <p className="font-medium text-sm">Error:</p>
-            <p className="text-sm">{voiceError}</p>
+            <p className="text-sm">{voiceError || error}</p>
           </div>
         )}
 
