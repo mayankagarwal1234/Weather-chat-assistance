@@ -86,43 +86,6 @@ Supports both **English** and **Japanese**, with full end-to-end language consis
 7. Scroll updates to latest message.
 
 ---
-
-# 🏗️ Architecture
-
-![Architecture Diagram](/assets/architecture.png)  
-*Visual representation of the data flow:
-User → Next.js UI → OpenWeatherMap → Gemini AI.*
-
-```mermaid
-graph TD
-    %% Nodes
-    User([👤 User])
-    UI[🖥️ Next.js UI]
-    Voice[🎙️ Voice Input]
-    OWM[☁️ OpenWeatherMap]
-    Proxy[⚙️ /api/gemini]
-    Gemini[✨ Google Gemini AI]
-
-    %% Data Flow
-    User -->|Text/Voice| UI
-    User -->|Speaks| Voice
-    Voice -->|Transcribed Text| UI
-    
-    UI -->|1. Get Weather| OWM
-    OWM -->|Weather Data| UI
-    
-    UI -->|2. Send Context| Proxy
-    Proxy -->|3. Prompt LLM| Gemini
-    Gemini -->|4. AI Response| Proxy
-    Proxy -->|Response| UI
-    
-    UI -->|5. Display Card| User
-
-    %% Styling
-    style User fill:#333,stroke:#fff,stroke-width:2px,color:#fff
-    style UI fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
-    style Gemini fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-
 # 📁 Project Structure
 
 ![Project Structure]  
