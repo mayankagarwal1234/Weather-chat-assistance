@@ -92,42 +92,33 @@ Supports both **English** and **Japanese**, with full end-to-end language consis
 ![Architecture Diagram](/assets/architecture.png)  
 *Visual representation of the data flow: User → Next.js UI → OpenWeatherMap → Gemini AI.*
 graph TD
+    %% Nodes
     User([👤 User])
-    
-    subgraph Client ["🖥️ Next.js Client (Browser)"]
-        UI[page.tsx UI]
-        Voice[Voice Input]
-    end
+    UI[🖥️ Next.js UI]
+    Voice[🎙️ Voice Input]
+    OWM[☁️ OpenWeatherMap]
+    Proxy[⚙️ /api/gemini]
+    Gemini[✨ Google Gemini AI]
 
-    subgraph Server ["⚙️ Next.js Server"]
-        Proxy[("/api/gemini/route.ts")]
-    end
-
-    subgraph External ["☁️ External Services"]
-        OWM[OpenWeatherMap API]
-        Gemini[Google Gemini AI]
-    end
-
-    %% Interactions
-    User -->|Types or Speaks| UI
-    User -->|Voice| Voice
-    Voice -->|Text| UI
+    %% Data Flow
+    User -->|Text/Voice| UI
+    User -->|Speaks| Voice
+    Voice -->|Transcribed Text| UI
     
-    UI -->|1. Fetch Weather| OWM
-    OWM -- Weather Data --> UI
+    UI -->|1. Get Weather| OWM
+    OWM -->|Weather Data| UI
     
-    UI -->|2. Send Weather + Query| Proxy
-    Proxy -->|3. Construct Prompt| Gemini
-    Gemini -- AI Suggestion --> Proxy
-    Proxy -- Response --> UI
+    UI -->|2. Send Context| Proxy
+    Proxy -->|3. Prompt LLM| Gemini
+    Gemini -->|4. AI Response| Proxy
+    Proxy -->|Response| UI
     
-    UI -->|4. Render Chat| User
+    UI -->|5. Display Card| User
 
     %% Styling
-    style User fill:#f9f,stroke:#333,stroke-width:2px
-    style Client fill:#e1f5fe,stroke:#01579b
-    style Server fill:#fff3e0,stroke:#ff6f00
-    style External fill:#f3e5f5,stroke:#7b1fa2
+    style User fill:#333,stroke:#fff,stroke-width:2px,color:#fff
+    style UI fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style Gemini fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
 
 > **Tip:** If you used the generator image provided earlier, place it at `public/assets/architecture.png` so the path above works on GitHub and Vercel.
 
@@ -138,64 +129,28 @@ graph TD
 ![Project Structure](/assets/structure.png)  
 *Overview of the Next.js App Router file organization.*
 graph TD
-    Root[📁 src/]
-    
-    %% App Directory
-    Root --> App[📂 app/]
-    App --> Page["📄 page.tsx <br/>(Main UI & Logic)"]
-    App --> Globals["🎨 globals.css <br/>(Tailwind & Themes)"]
-    App --> API[📂 api/]
-    API --> GemRoute[📂 gemini/]
-    GemRoute --> Route["⚡ route.ts <br/>(Gemini Proxy)"]
-
-    %% Components
-    Root --> Comps[📂 components/]
-    Comps --> MsgTime["🧩 MessageTime.tsx"]
-
-    %% Hooks
-    Root --> Hooks[📂 hooks/]
-    Hooks --> VoiceHook["🪝 useVoiceInput.ts"]
-
-    %% Lib
-    Root --> Lib[📂 lib/]
-    Lib --> APIFuncs["🛠️ api.ts <br/>(Fetch Functions)"]
-    Lib --> Consts["📝 constants.ts <br/>(Prompts & Types)"]
-    Lib --> Helpers["🔧 helpers.ts"]
-
-    %% Public
-    Root --> Public[📂 public/]
-    Public --> Assets["🖼️ images/icons"]
-
-    %% Styling
-    style Root fill:#fafafa,stroke:#333,stroke-width:2px
-    style App fill:#e3f2fd,stroke:#2196f3
-    style API fill:#e3f2fd,stroke:#2196f3
-    style Comps fill:#fff9c4,stroke:#fbc02d
-    style Hooks fill:#e8f5e9,stroke:#4caf50
-    style Lib fill:#fce4ec,stroke:#e91e63
-
-src/
-app/
-page.tsx # Main chat UI & controller
-api/
-gemini/route.ts # Server route – Gemini proxy with enforced language
-globals.css # Global styles, resets, animations
-
-components/
-MessageTime.tsx # Client-only timestamp rendering (fixes hydration mismatch)
-
-hooks/
-useVoiceInput.ts # JA/EN Voice → Text → City detection
-
-lib/
-api.ts # fetchWeather + fetchGeminiResponse
-constants.ts # System prompt + model config
-helpers.ts # Optional utilities
-
-public/
-assets/
-architecture.png # Architecture diagram (move image here)
-structure.png # Project structure image (move image here)
+  src/
+├── app/
+│   ├── api/
+│   │   └── gemini/
+│   │       └── route.ts       # Server-side API Proxy
+│   ├── layout.tsx             # Root layout & Metadata
+│   ├── page.tsx               # Main UI Controller
+│   └── globals.css            # Tailwind & Animations
+│
+├── components/
+│   └── MessageTime.tsx        # Client-side timestamp
+│
+├── hooks/
+│   └── useVoiceInput.ts       # Web Speech API Logic
+│
+├── lib/
+│   ├── api.ts                 # Fetchers (Weather + Gemini)
+│   ├── constants.ts           # Prompts & Config
+│   └── helpers.ts             # Formatters
+│
+└── public/
+    └── assets/                # Static images
 # Other static assets & icons
 ---
 
