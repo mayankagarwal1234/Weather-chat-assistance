@@ -142,46 +142,6 @@ Create `.env.local` in the project root:
 ```env
 NEXT_PUBLIC_OPENWEATHER_API_KEY=your_openweather_key
 GEMINI_API_KEY=your_gemini_key
-
- 
----
-
-## 🧩 Why This Structure Works
-
-- UI, logic, and API code separated cleanly  
-- `MessageTime.tsx` isolates hydration-sensitive code (timestamps)  
-- `/api/gemini` keeps Gemini key server-side (secure)  
-- Modular layout makes the app easy to maintain and extend
-
----
-
-# ⚙️ Setup
-
-Create `.env.local` in the project root:
-
-```env
-NEXT_PUBLIC_OPENWEATHER_API_KEY=your_openweather_key
-GEMINI_API_KEY=your_gemini_key
-
-
----
-
-## 🧩 Why This Structure Works
-
-- UI, logic, and API code separated cleanly  
-- `MessageTime.tsx` isolates hydration-sensitive code (timestamps)  
-- `/api/gemini` keeps Gemini key server-side (secure)  
-- Modular layout makes the app easy to maintain and extend
-
----
-
-# ⚙️ Setup
-
-Create `.env.local` in the project root:
-
-```env
-NEXT_PUBLIC_OPENWEATHER_API_KEY=your_openweather_key
-GEMINI_API_KEY=your_gemini_key
 Install dependencies:
 
 npm install
